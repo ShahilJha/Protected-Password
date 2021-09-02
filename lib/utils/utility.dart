@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:crypto/crypto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -77,5 +79,13 @@ class Utility {
     );
   }
 
-  // static String
+  static String getKeyDigestString(String key) {
+    var bytes = utf8.encode(key); // data being hashed
+    var digest = sha1.convert(bytes); //Hashing Process using SHA1
+    return digest.toString();
+  }
+
+  // static String encryptString(String str){}
+  //
+  // static String decryptString(String str){}
 }

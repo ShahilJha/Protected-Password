@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:protected_password/models/password_box.dart';
 import 'package:protected_password/models/password_box_basic_data.dart';
+import 'package:protected_password/utils/utility.dart';
 
 class DatabaseService {
   DatabaseService._privateConstructor();
@@ -112,8 +113,33 @@ class DatabaseService {
   }
 
   Future<void> changePassword(PasswordBox box, String newKey) async {
-    //todo:change hash value in basicData
-    //todo:encrypt data using newKey
-    //todo:updatePasswordBox(box)
+    try {
+      //todo:change hash value in basicData
+      _firestore
+          .collection('BasicData')
+          .where('id', isEqualTo: box.id)
+          .get()
+          .then(
+            (value) => _firestore
+                .collection('BasicData')
+                .doc(value.docs.first.id)
+                .update(
+                  passwordBoxBasicDataToMap(
+                    PasswordBoxBasicData(
+                      id: box.id,
+                      address: box.address,
+                      hash: Utility.getKeyDigestString(newKey),
+                    ),
+                  ),
+                ),
+          );
+
+      //todo:encrypt data using newKey
+      PasswordBox encryptedBox = PasswordBox();
+
+      //todo:updatePasswordBox(box)
+    } catch (e) {
+      print('EXCEPTION: -changePassword--> $e');
+    }
   }
 }
