@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final passwordBox = passwordBoxFromMap(jsonString);
-
 PasswordBox passwordBoxFromMap(Map<String, dynamic> map) =>
     PasswordBox.fromMap(map);
 
@@ -30,6 +26,10 @@ class PasswordBox {
         "address": address,
         "password": List<dynamic>.from(passwords!.map((x) => x.toMap())),
       };
+
+  //TODO: add functionality
+  void encrypt() {}
+  void decrypt() {}
 }
 
 class Password {
@@ -58,4 +58,8 @@ class Password {
         "userName": userName,
         "password": password,
       };
+
+  //TODO: add functionality
+  void encrypt() {}
+  void decrypt() {}
 }
