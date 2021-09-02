@@ -16,7 +16,7 @@ dependencies:
   cloud_firestore: ^2.5.1
   provider: ^6.0.0
   flutter_screenutil: ^5.0.0+2
-
+  crypto: ^3.0.1
 
 dev_dependencies:
   flutter_test:
