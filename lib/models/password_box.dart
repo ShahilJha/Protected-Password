@@ -1,3 +1,6 @@
+import 'package:protected_password/services/box_key.dart';
+import 'package:protected_password/utils/utility.dart';
+
 PasswordBox passwordBoxFromMap(Map<String, dynamic> map) =>
     PasswordBox.fromMap(map);
 
@@ -5,61 +8,56 @@ Map<String, dynamic> passwordBoxToMap(PasswordBox data) => data.toMap();
 
 class PasswordBox {
   PasswordBox({
-    this.id,
-    this.address,
-    this.passwords,
+    required this.id,
+    required this.address,
+    required this.passwords,
   });
 
-  String? id;
-  String? address;
-  List<Password>? passwords;
+  String id;
+  String address;
+  List<Password> passwords;
 
-  factory PasswordBox.fromMap(Map<String, dynamic> map) => PasswordBox(
-        id: map["id"],
-        address: map["address"],
-        passwords: List<Password>.from(
-            map["password"].map((x) => Password.fromMap(x))),
-      );
+  factory PasswordBox.fromMap(Map<String, dynamic> map) {
+    return PasswordBox(
+      id: Utility.decryptString(map["id"], BoxKey.key),
+      address: Utility.decryptString(map["address"], BoxKey.key),
+      passwords:
+          List<Password>.from(map["password"].map((x) => Password.fromMap(x))),
+    );
+  }
 
   Map<String, dynamic> toMap() => {
-        "id": id,
-        "address": address,
-        "password": List<dynamic>.from(passwords!.map((x) => x.toMap())),
+        "id": Utility.encryptString(id, BoxKey.key),
+        "address": Utility.encryptString(address, BoxKey.key),
+        "password": List<dynamic>.from(passwords.map((x) => x.toMap())),
       };
-
-  //TODO: add functionality
-  void encrypt() {}
-  void decrypt() {}
 }
 
 class Password {
   Password({
-    this.id,
-    this.associatedEntity,
-    this.userName,
-    this.password,
+    required this.id,
+    required this.associatedEntity,
+    required this.userName,
+    required this.password,
   });
 
-  String? id;
-  String? associatedEntity;
-  String? userName;
-  String? password;
+  String id;
+  String associatedEntity;
+  String userName;
+  String password;
 
   factory Password.fromMap(Map<String, dynamic> map) => Password(
-        id: map["id"],
-        associatedEntity: map["associatedEntity"],
-        userName: map["userName"],
-        password: map["password"],
+        id: Utility.decryptString(map["id"], BoxKey.key),
+        associatedEntity:
+            Utility.decryptString(map["associatedEntity"], BoxKey.key),
+        userName: Utility.decryptString(map["userName"], BoxKey.key),
+        password: Utility.decryptString(map["password"], BoxKey.key),
       );
 
   Map<String, dynamic> toMap() => {
-        "id": id,
-        "associatedEntity": associatedEntity,
-        "userName": userName,
-        "password": password,
+        "id": Utility.encryptString(id, BoxKey.key),
+        "associatedEntity": Utility.encryptString(associatedEntity, BoxKey.key),
+        "userName": Utility.encryptString(userName, BoxKey.key),
+        "password": Utility.encryptString(password, BoxKey.key),
       };
-
-  //TODO: add functionality
-  void encrypt() {}
-  void decrypt() {}
 }

@@ -104,22 +104,22 @@ class Utility {
     return processedKey;
   }
 
-  static Future<String> encryptString(String str, String boxKey) async {
+  static String encryptString(String str, String boxKey) {
     final key = encrypt.Key.fromUtf8(prepareKey(boxKey));
     final iv = encrypt.IV.fromLength(16);
     dynamic encrypter = encrypt.Encrypter(encrypt.AES(key));
 
-    final encrypted = await encrypter.encrypt(str, iv: iv);
+    final encrypted = encrypter.encrypt(str, iv: iv);
     return encrypted.base64;
   }
 
-  static Future<String> decryptString(String str, String boxKey) async {
+  static String decryptString(String str, String boxKey) {
     final key = encrypt.Key.fromUtf8(prepareKey(boxKey));
     final iv = encrypt.IV.fromLength(16);
     dynamic encrypter = encrypt.Encrypter(encrypt.AES(key));
 
     final String decrypted =
-        await encrypter.decrypt(encrypt.Encrypted.fromBase64(str), iv: iv);
+        encrypter.decrypt(encrypt.Encrypted.fromBase64(str), iv: iv);
     return decrypted;
   }
 }

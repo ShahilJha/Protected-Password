@@ -135,7 +135,6 @@ class DatabaseService {
           );
 
       //todo:encrypt data using newKey
-      PasswordBox encryptedBox = PasswordBox();
 
       //todo:updatePasswordBox(box)
     } catch (e) {
