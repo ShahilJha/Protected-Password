@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -85,7 +86,40 @@ class Utility {
     return digest.toString();
   }
 
-  // static String encryptString(String str){}
-  //
-  // static String decryptString(String str){}
+  static String prepareKey(String key) {
+    String processedKey = '';
+    int maxLength = 32;
+    List<int> characterList = key.codeUnits;
+    List<String> stringList = [];
+    //String key to stringList
+    for (var i in characterList) {
+      stringList.add(String.fromCharCode(i));
+    }
+    //stringList to processedKey
+    for (int x = 0; x < maxLength; x++) {
+      processedKey = processedKey + stringList[x % stringList.length];
+    }
+
+    //return processed key
+    return processedKey;
+  }
+
+  static Future<String> encryptString(String str, String boxKey) async {
+    final key = encrypt.Key.fromUtf8(prepareKey(boxKey));
+    final iv = encrypt.IV.fromLength(16);
+    dynamic encrypter = encrypt.Encrypter(encrypt.AES(key));
+
+    final encrypted = await encrypter.encrypt(str, iv: iv);
+    return encrypted.base64;
+  }
+
+  static Future<String> decryptString(String str, String boxKey) async {
+    final key = encrypt.Key.fromUtf8(prepareKey(boxKey));
+    final iv = encrypt.IV.fromLength(16);
+    dynamic encrypter = encrypt.Encrypter(encrypt.AES(key));
+
+    final String decrypted =
+        await encrypter.decrypt(encrypt.Encrypted.fromBase64(str), iv: iv);
+    return decrypted;
+  }
 }
