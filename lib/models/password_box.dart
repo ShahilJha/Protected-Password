@@ -2,8 +2,6 @@
 //
 //     final passwordBox = passwordBoxFromMap(jsonString);
 
-import 'dart:convert';
-
 PasswordBox passwordBoxFromMap(Map<String, dynamic> map) =>
     PasswordBox.fromMap(map);
 
@@ -13,24 +11,24 @@ class PasswordBox {
   PasswordBox({
     this.id,
     this.address,
-    this.password,
+    this.passwords,
   });
 
-  int? id;
+  String? id;
   String? address;
-  List<Password>? password;
+  List<Password>? passwords;
 
   factory PasswordBox.fromMap(Map<String, dynamic> map) => PasswordBox(
         id: map["id"],
         address: map["address"],
-        password: List<Password>.from(
+        passwords: List<Password>.from(
             map["password"].map((x) => Password.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
         "id": id,
         "address": address,
-        "password": List<dynamic>.from(password!.map((x) => x.toMap())),
+        "password": List<dynamic>.from(passwords!.map((x) => x.toMap())),
       };
 }
 
@@ -42,7 +40,7 @@ class Password {
     this.password,
   });
 
-  int? id;
+  String? id;
   String? associatedEntity;
   String? userName;
   String? password;

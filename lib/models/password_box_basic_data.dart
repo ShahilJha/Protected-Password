@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 PasswordBoxBasicData passwordBoxBasicDataFromMap(Map<String, dynamic> map) =>
     PasswordBoxBasicData.fromMap(map);
 
@@ -13,7 +11,7 @@ class PasswordBoxBasicData {
     this.hash,
   });
 
-  int? id;
+  String? id;
   String? address;
   String? hash;
 
