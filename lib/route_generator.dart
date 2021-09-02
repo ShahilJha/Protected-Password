@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:protected_password/screens/AddressSearchPage/AddressSearchPage.dart';
-import 'package:protected_password/screens/PasswordBoxPage/PasswordBoxPage.dart';
+import 'package:protected_password/screens/address_search_page/address_search_page.dart';
+import 'package:protected_password/screens/password_box_page/password_box_page.dart';
 
 /*
   To Navigate to another screen:
