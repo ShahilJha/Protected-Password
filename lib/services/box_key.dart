@@ -1,9 +1,6 @@
 import 'package:protected_password/utils/utility.dart';
 
 class BoxKey {
-  BoxKey._privateConstructor();
-  static final instance = BoxKey._privateConstructor();
-
   static String? _key;
 
   static String get key => _key ?? '';
@@ -14,4 +11,6 @@ class BoxKey {
 
   static bool compareHash(String hash) =>
       hash == Utility.getKeyDigestString(key);
+
+  static String get hash => Utility.getKeyDigestString(key);
 }

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:protected_password/models/password_box.dart';
 import 'package:protected_password/models/password_box_basic_data.dart';
+import 'package:protected_password/services/box_key.dart';
 import 'package:protected_password/utils/utility.dart';
+import 'package:uuid/uuid.dart';
 
 class DatabaseService {
   DatabaseService._privateConstructor();
@@ -30,7 +32,7 @@ class DatabaseService {
     try {
       var documentQuery = await _firestore
           .collection('PasswordBox')
-          .where('id', isEqualTo: data.id)
+          .where('id', isEqualTo: Utility.encryptString(data.id, BoxKey.key))
           .get();
       var document = documentQuery.docs.first.data();
       return passwordBoxFromMap(document);
@@ -53,20 +55,30 @@ class DatabaseService {
     );
   }
 
-  Future<void> createPasswordBox(PasswordBox box, String hash) async {
+  Future<void> createPasswordBox(PasswordBox box) async {
     try {
-      DocumentReference reference = _firestore.collection('PasswordBox').doc();
-      box.id = reference.id;
-      reference.set(passwordBoxToMap(box));
+      DocumentReference reference = _firestore.collection('BasicData').doc();
+      reference.set(
+        passwordBoxBasicDataToMap(
+          PasswordBoxBasicData(
+            id: reference.id,
+            address: box.address,
+            hash: BoxKey.hash,
+          ),
+        ),
+      );
 
-      _firestore.collection('BasicData').add(
-            passwordBoxBasicDataToMap(
-              PasswordBoxBasicData(
-                id: box.id,
-                address: box.address,
-                hash: hash,
-              ),
-            ),
+      box.id = reference.id;
+      box.passwords.add(
+        Password(
+          id: Uuid().v1(),
+          associatedEntity: "Website",
+          userName: "User Name",
+          password: "password",
+        ),
+      );
+      _firestore.collection('PasswordBox').add(
+            passwordBoxToMap(box),
           );
     } catch (e) {
       print('EXCEPTION: -createPasswordBox--> $e');
@@ -77,7 +89,7 @@ class DatabaseService {
     try {
       _firestore
           .collection('PasswordBox')
-          .where('id', isEqualTo: box.id)
+          .where('id', isEqualTo: Utility.encryptString(box.id, BoxKey.key))
           .get()
           .then((value) => _firestore
               .collection('PasswordBox')
@@ -92,7 +104,7 @@ class DatabaseService {
     try {
       _firestore
           .collection('PasswordBox')
-          .where('id', isEqualTo: box.id)
+          .where('id', isEqualTo: Utility.encryptString(box.id, BoxKey.key))
           .get()
           .then((value) => _firestore
               .collection('PasswordBox')
@@ -134,9 +146,8 @@ class DatabaseService {
                 ),
           );
 
-      //todo:encrypt data using newKey
-
-      //todo:updatePasswordBox(box)
+      //update the PasswordBox
+      updatePasswordBox(box);
     } catch (e) {
       print('EXCEPTION: -changePassword--> $e');
     }

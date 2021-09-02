@@ -6,14 +6,14 @@ Map<String, dynamic> passwordBoxBasicDataToMap(PasswordBoxBasicData data) =>
 
 class PasswordBoxBasicData {
   PasswordBoxBasicData({
-    this.id,
-    this.address,
-    this.hash,
+    required this.id,
+    required this.address,
+    required this.hash,
   });
 
-  String? id;
-  String? address;
-  String? hash;
+  String id;
+  String address;
+  String hash;
 
   factory PasswordBoxBasicData.fromMap(Map<String, dynamic> json) =>
       PasswordBoxBasicData(
