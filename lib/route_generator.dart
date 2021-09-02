@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:protected_password/screens/AddressSearchPage/AddressSearchPage.dart';
+import 'package:protected_password/screens/PasswordBoxPage/PasswordBoxPage.dart';
 
 /*
   To Navigate to another screen:
@@ -16,15 +18,15 @@ class RouteGenerator {
 
       //COMMON Routes
       case '/':
-        return MaterialPageRoute(builder: (_) => Container());
+        return MaterialPageRoute(builder: (_) => AddressSearchPage());
 
-      //   case '/receptionist_order_detail':
-      //     if (args is bool) {
-      //       return MaterialPageRoute(
-      //         builder: (_) => Container(order: args),
-      //       );
-      //     }
-      //     return _errorRoute();
+      case '/receptionist_order_detail':
+        if (args is bool) {
+          return MaterialPageRoute(
+            builder: (_) => PasswordBoxPage(),
+          );
+        }
+        return _errorRoute();
 
       //ERROR Route
       default:
