@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:protected_password/screens/address_search_page/address_search_page.dart';
+import 'package:protected_password/screens/enter_password_page/enter_password_page.dart';
 import 'package:protected_password/screens/password_box_page/password_box_page.dart';
 
 /*
@@ -20,10 +21,18 @@ class RouteGenerator {
       case '/':
         return MaterialPageRoute(builder: (_) => AddressSearchPage());
 
-      case '/receptionist_order_detail':
+      case '/password_box_page':
         if (args is bool) {
           return MaterialPageRoute(
             builder: (_) => PasswordBoxPage(),
+          );
+        }
+        return _errorRoute();
+
+      case '/enter_password_page':
+        if (args is bool) {
+          return MaterialPageRoute(
+            builder: (_) => EnterPasswordPage(),
           );
         }
         return _errorRoute();
