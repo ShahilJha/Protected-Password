@@ -139,29 +139,35 @@ class BoxWidget extends StatelessWidget {
                           ),
                           width: 1800.w,
                           height: 250.h,
+                          margin: EdgeInsets.symmetric(vertical: 30.h),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Spacer(),
+                              Spacer(flex: 2),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
+                                  Spacer(),
                                   Text(
                                     password.associatedEntity,
                                     style: kTextSub,
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
+                                  Spacer(flex: 3),
+                                  IconButton(
+                                    icon: Icon(Icons.edit),
+                                    onPressed: () {
                                       boxProvider.deletePassword(password);
                                     },
-                                    child: Text(
-                                      'X',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.red),
-                                    ),
                                   ),
+                                  Spacer(),
+                                  IconButton(
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () {
+                                      boxProvider.deletePassword(password);
+                                    },
+                                  ),
+                                  Spacer(flex: 2),
                                 ],
                               ),
                               Spacer(),
@@ -254,17 +260,18 @@ class BoxWidget extends StatelessWidget {
                                     style: kTextSub,
                                   ),
                                   Spacer(flex: 3),
-                                  GestureDetector(
-                                    onTap: () {
-                                      print('pressed x');
+                                  IconButton(
+                                    icon: Icon(Icons.edit),
+                                    onPressed: () {
                                       boxProvider.deletePassword(password);
                                     },
-                                    child: Text(
-                                      'X',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.red),
-                                    ),
+                                  ),
+                                  Spacer(),
+                                  IconButton(
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () {
+                                      boxProvider.deletePassword(password);
+                                    },
                                   ),
                                   Spacer(),
                                 ],
