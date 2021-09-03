@@ -85,11 +85,13 @@ class DatabaseService {
     }
   }
 
-  Future<void> updatePasswordBox(PasswordBox box) async {
+  Future<void> updatePasswordBox(PasswordBox box, {String newKey = ''}) async {
+    String key = newKey == '' ? BoxKey.key : newKey;
+
     try {
       _firestore
           .collection('PasswordBox')
-          .where('id', isEqualTo: Utility.encryptString(box.id, BoxKey.key))
+          .where('id', isEqualTo: Utility.encryptString(box.id, key))
           .get()
           .then((value) => _firestore
               .collection('PasswordBox')
@@ -147,7 +149,10 @@ class DatabaseService {
           );
 
       //update the PasswordBox
-      updatePasswordBox(box);
+      updatePasswordBox(box, newKey: newKey);
+
+      //update newKey to BoxKey
+      BoxKey.key = newKey;
     } catch (e) {
       print('EXCEPTION: -changePassword--> $e');
     }
