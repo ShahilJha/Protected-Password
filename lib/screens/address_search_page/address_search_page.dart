@@ -55,9 +55,12 @@ class _AddressSearchPageState extends State<AddressSearchPage> {
                               message: 'Enter an Address');
                         } else if (await DatabaseService.instance
                             .doesAddressExit(address)) {
+                          Utility.showProcessingPopUp(context);
                           PasswordBoxBasicData passwordBoxBasicData =
                               await DatabaseService.instance
                                   .checkAddress(address);
+                          Navigator.pop(context);
+
                           //redirect to password page
                           Navigator.pop(context);
                           Navigator.of(context).pushNamed(

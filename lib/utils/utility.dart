@@ -73,8 +73,8 @@ class Utility {
               color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
-            width: 300.w,
-            height: 300.w,
+            width: 150.w,
+            height: 150.w,
             child: CircularProgressIndicator(),
           ),
         );
