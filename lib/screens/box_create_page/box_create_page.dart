@@ -126,7 +126,9 @@ class _BoxCreatePageState extends State<BoxCreatePage> {
                   hoverColor: Theme.of(context).primaryColor,
                   icon: Icon(Icons.arrow_forward),
                   onPressed: () async {
-                    if (createdKey == recreatedKey) {
+                    if (createdKey == '' || recreatedKey == '') {
+                      Utility.showSnackBar(context, message: 'Empty TextField');
+                    } else if (createdKey == recreatedKey) {
                       BoxKey.key = createdKey;
 
                       TempBox.instance.id = createdKey;
@@ -140,15 +142,25 @@ class _BoxCreatePageState extends State<BoxCreatePage> {
                         boxKey: createdKey,
                       );
 
+                      PasswordBoxBasicData passwordBoxBasicData =
+                          await DatabaseService.instance
+                              .checkAddress(widget.address);
+                      //redirect to password page
                       Navigator.pop(context);
                       Navigator.of(context).pushNamed(
-                        '/password_box_page',
-                        arguments: PasswordBoxBasicData(
-                          id: createdKey,
-                          address: widget.address,
-                          hash: Utility.getKeyDigestString(createdKey),
-                        ),
+                        '/enter_password_page',
+                        arguments: passwordBoxBasicData,
                       );
+
+                      // Navigator.pop(context);
+                      // Navigator.of(context).pushNamed(
+                      //   '/password_box_page',
+                      //   arguments: PasswordBoxBasicData(
+                      //     id: createdKey,
+                      //     address: widget.address,
+                      //     hash: Utility.getKeyDigestString(createdKey),
+                      //   ),
+                      // );
                     } else {
                       Utility.showSnackBar(context,
                           message: 'Password Box Keys Mismatch');
