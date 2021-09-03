@@ -1,15 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:protected_password/models/password_box.dart';
 import 'package:protected_password/models/password_box_basic_data.dart';
 import 'package:protected_password/screens/password_box_page/local_widget/add_password_screen.dart';
 import 'package:protected_password/screens/password_box_page/local_widget/update_password_screen.dart';
-import 'package:protected_password/services/firestore_service.dart';
 import 'package:protected_password/services/password_box_provider.dart';
 import 'package:protected_password/utils/utility.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:uuid/uuid.dart';
 
 const kTextSite = TextStyle(fontSize: 22, fontWeight: FontWeight.bold);
 const kTextSub = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
@@ -59,15 +56,19 @@ class BoxWidget extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
+              Utility.showProcessingPopUp(context);
               boxProvider.saveBox();
+              Navigator.pop(context);
             },
           ),
           IconButton(
             icon: Icon(Icons.close),
             onPressed: () {
+              Utility.showProcessingPopUp(context);
               boxProvider.deleteBox();
               Navigator.pop(context);
               Navigator.of(context).pushNamed('/');
+              Navigator.pop(context);
             },
           ),
         ],
@@ -75,51 +76,6 @@ class BoxWidget extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // Flexible(
-          //   child: Container(
-          //     height: 60.h,
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.end,
-          //       children: [
-          //         IconButton(
-          //           icon: Icon(Icons.add_circle_outline),
-          //           onPressed: () {
-          //             // Provider.of<PasswordBoxProvider>(context).addPassword(
-          //             //   Password(
-          //             //     id: Uuid().v1(),
-          //             //     associatedEntity: 'website',
-          //             //     userName: 'username',
-          //             //     password: 'password',
-          //             //   ),
-          //             // );
-          //             showModalBottomSheet(
-          //               context: context,
-          //               builder: (context) => AddPasswordScreen(),
-          //             );
-          //           },
-          //         ),
-          //         IconButton(
-          //           icon: Icon(Icons.save),
-          //           onPressed: () {
-          //             // Provider.of<PasswordBoxProvider>(context, listen: false)
-          //             //     .saveBox();
-          //             boxProvider.saveBox();
-          //           },
-          //         ),
-          //         IconButton(
-          //           icon: Icon(Icons.close),
-          //           onPressed: () {
-          //             // Provider.of<PasswordBoxProvider>(context, listen: false)
-          //             //     .deleteBox();
-          //             boxProvider.deleteBox();
-          //             Navigator.pop(context);
-          //             Navigator.of(context).pushNamed('/');
-          //           },
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
           Flexible(
             child: Container(
               width: double.maxFinite,

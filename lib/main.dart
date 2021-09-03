@@ -2,8 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:protected_password/route_generator.dart';
-import 'package:protected_password/services/password_box_provider.dart';
-import 'package:provider/provider.dart';
 import 'theme_generator.dart';
 
 void main() async {
