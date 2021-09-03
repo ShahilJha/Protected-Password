@@ -26,24 +26,24 @@ class _PasswordBoxPageState extends State<PasswordBoxPage> {
   //       }));
   // }
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
-      // print('BEFORE : ' + box.id + ' ' + box.address);
-      PasswordBox box =
-          await DatabaseService.instance.getPasswordBox(widget.basicData);
-      TempBox.instance.id = box.id;
-      TempBox.instance.address = box.address;
-      TempBox.instance.passwords = box.passwords;
-      // print('AFTER : ' +
-      //     box.id +
-      //     ' ' +
-      //     box.address +
-      //     ' ' +
-      //     box.passwords.first.associatedEntity);
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance!.addPostFrameCallback((_) async {
+  //     // print('BEFORE : ' + box.id + ' ' + box.address);
+  //     PasswordBox box =
+  //         await DatabaseService.instance.getPasswordBox(widget.basicData);
+  //     TempBox.instance.id = box.id;
+  //     TempBox.instance.address = box.address;
+  //     TempBox.instance.passwords = box.passwords;
+  //     // print('AFTER : ' +
+  //     //     box.id +
+  //     //     ' ' +
+  //     //     box.address +
+  //     //     ' ' +
+  //     //     box.passwords.first.associatedEntity);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:protected_password/models/password_box.dart';
+import 'package:protected_password/models/password_box_basic_data.dart';
+import 'package:protected_password/models/temp_box.dart';
 import 'package:protected_password/services/firestore_service.dart';
 
 class PasswordBoxProvider extends ChangeNotifier {
+  PasswordBoxProvider() {
+    initBox();
+  }
+
   PasswordBox passwordBox =
       PasswordBox(id: "Error", address: "Error", passwords: []);
 
-  // void setPasswordBox(PasswordBox box) {
-  //   this.passwordBox = box;
-  //   notifyListeners();
-  // }
+  initBox() async {
+    PasswordBox box = await DatabaseService.instance.getPasswordBox(
+      PasswordBoxBasicData(
+        id: TempBox.instance.id,
+        address: TempBox.instance.address,
+        hash: TempBox.instance.hash,
+      ),
+    );
+    setPasswordBox(box);
+  }
+
+  void setPasswordBox(PasswordBox box) {
+    this.passwordBox = box;
+    notifyListeners();
+  }
 
   int getIndex(Password password) {
     int index = passwordBox.passwords

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:protected_password/models/password_box_basic_data.dart';
+import 'package:protected_password/models/temp_box.dart';
 import 'package:protected_password/services/box_key.dart';
 import 'package:protected_password/utils/utility.dart';
 
@@ -61,6 +62,10 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                         if (Utility.getKeyDigestString(password) ==
                             widget.basicData.hash) {
                           BoxKey.key = password;
+
+                          TempBox.instance.id = widget.basicData.id;
+                          TempBox.instance.address = widget.basicData.address;
+                          TempBox.instance.hash = widget.basicData.hash;
 
                           //redirect to password box page
                           Navigator.of(context).pushNamed(
