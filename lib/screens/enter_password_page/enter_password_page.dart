@@ -64,11 +64,13 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                               message: 'Enter a Password');
                         } else if (Utility.getKeyDigestString(password) ==
                             widget.basicData.hash) {
+                          Utility.showProcessingPopUp(context);
                           BoxKey.key = password;
 
                           TempBox.instance.id = widget.basicData.id;
                           TempBox.instance.address = widget.basicData.address;
                           TempBox.instance.hash = widget.basicData.hash;
+                          Navigator.pop(context);
 
                           //redirect to password box page
                           Navigator.pop(context);
