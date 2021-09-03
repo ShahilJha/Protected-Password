@@ -50,7 +50,10 @@ class _AddressSearchPageState extends State<AddressSearchPage> {
                     suffixIcon: IconButton(
                       icon: Icon(Icons.search),
                       onPressed: () async {
-                        if (await DatabaseService.instance
+                        if (address.trim() == '') {
+                          Utility.showSnackBar(context,
+                              message: 'Enter an Address');
+                        } else if (await DatabaseService.instance
                             .doesAddressExit(address)) {
                           PasswordBoxBasicData passwordBoxBasicData =
                               await DatabaseService.instance

@@ -59,7 +59,10 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                     suffixIcon: IconButton(
                       icon: Icon(Icons.arrow_forward),
                       onPressed: () {
-                        if (Utility.getKeyDigestString(password) ==
+                        if (password.trim() == '') {
+                          Utility.showSnackBar(context,
+                              message: 'Enter a Password');
+                        } else if (Utility.getKeyDigestString(password) ==
                             widget.basicData.hash) {
                           BoxKey.key = password;
 

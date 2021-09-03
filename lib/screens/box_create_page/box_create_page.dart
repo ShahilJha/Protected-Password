@@ -126,7 +126,7 @@ class _BoxCreatePageState extends State<BoxCreatePage> {
                   hoverColor: Theme.of(context).primaryColor,
                   icon: Icon(Icons.arrow_forward),
                   onPressed: () async {
-                    if (createdKey == '' || recreatedKey == '') {
+                    if (createdKey.trim() == '' || recreatedKey.trim() == '') {
                       Utility.showSnackBar(context, message: 'Empty TextField');
                     } else if (createdKey == recreatedKey) {
                       BoxKey.key = createdKey;
