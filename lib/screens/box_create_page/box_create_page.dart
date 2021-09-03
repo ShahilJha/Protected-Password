@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:protected_password/models/password_box.dart';
+import 'package:protected_password/models/password_box_basic_data.dart';
 import 'package:protected_password/services/firestore_service.dart';
+import 'package:protected_password/services/password_box_provider.dart';
 import 'package:protected_password/utils/utility.dart';
+import 'package:provider/provider.dart';
 
 class BoxCreatePage extends StatefulWidget {
   final String address;
@@ -120,15 +123,19 @@ class _BoxCreatePageState extends State<BoxCreatePage> {
                   color: Theme.of(context).primaryColor,
                   hoverColor: Theme.of(context).primaryColor,
                   icon: Icon(Icons.arrow_forward),
-                  onPressed: () {
+                  onPressed: () async {
                     if (createdKey == recreatedKey) {
                       //create passwordbox
-                      DatabaseService.instance.createPasswordBox(
+                      await DatabaseService.instance.createPasswordBox(
                           address: widget.address, boxKey: createdKey);
-                      //navigate to passwordbox
+
                       Navigator.of(context).pushNamed(
                         '/password_box_page',
-                        arguments: true,
+                        arguments: PasswordBoxBasicData(
+                          id: createdKey,
+                          address: widget.address,
+                          hash: Utility.getKeyDigestString(createdKey),
+                        ),
                       );
                     } else {
                       Utility.showSnackBar(context,

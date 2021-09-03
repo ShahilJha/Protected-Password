@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:protected_password/models/password_box_basic_data.dart';
+import 'package:protected_password/services/box_key.dart';
 import 'package:protected_password/services/firestore_service.dart';
+import 'package:protected_password/utils/utility.dart';
 
 class AddressSearchPage extends StatefulWidget {
   const AddressSearchPage({Key? key}) : super(key: key);
@@ -34,6 +36,7 @@ class _AddressSearchPageState extends State<AddressSearchPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Spacer(),
                 TextField(
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.done,
@@ -53,10 +56,10 @@ class _AddressSearchPageState extends State<AddressSearchPage> {
                               await DatabaseService.instance
                                   .checkAddress(address);
                           //redirect to password page
-                          // Navigator.of(context).pushNamed(
-                          //   '/enter_password_page',
-                          //   arguments : passwordBoxBasicData,
-                          // );
+                          Navigator.of(context).pushNamed(
+                            '/enter_password_page',
+                            arguments: passwordBoxBasicData,
+                          );
                         } else {
                           //goto box creation page
                           Navigator.of(context).pushNamed(
@@ -79,6 +82,15 @@ class _AddressSearchPageState extends State<AddressSearchPage> {
                     });
                   },
                 ),
+                Spacer(),
+                // IconButton(
+                //   splashColor: Theme.of(context).accentColor,
+                //   color: Theme.of(context).primaryColor,
+                //   hoverColor: Theme.of(context).primaryColor,
+                //   icon: Icon(Icons.arrow_forward),
+                //   onPressed: () {},
+                // ),
+                // Spacer(),
               ],
             ),
           ),

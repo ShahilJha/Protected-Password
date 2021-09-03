@@ -5,7 +5,12 @@ import 'package:protected_password/services/firestore_service.dart';
 class PasswordBoxProvider extends ChangeNotifier {
   PasswordBoxProvider(this.passwordBox);
 
-  PasswordBox passwordBox;
+  late PasswordBox passwordBox;
+
+  // void setPasswordBox(PasswordBox box) {
+  //   this.passwordBox = box;
+  //   notifyListeners();
+  // }
 
   int getIndex(Password password) {
     int index = passwordBox.passwords

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:protected_password/models/password_box.dart';
+import 'package:protected_password/models/password_box_basic_data.dart';
 import 'package:protected_password/screens/address_search_page/address_search_page.dart';
 import 'package:protected_password/screens/box_create_page/box_create_page.dart';
 import 'package:protected_password/screens/enter_password_page/enter_password_page.dart';
 import 'package:protected_password/screens/password_box_page/password_box_page.dart';
+import 'package:protected_password/services/firestore_service.dart';
 
 /*
   To Navigate to another screen:
@@ -23,17 +26,19 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => AddressSearchPage());
 
       case '/password_box_page':
-        if (args is bool) {
+        if (args is PasswordBoxBasicData) {
           return MaterialPageRoute(
-            builder: (_) => PasswordBoxPage(),
+            builder: (_) => PasswordBoxPage(
+              basicData: args,
+            ),
           );
         }
         return _errorRoute();
 
       case '/enter_password_page':
-        if (args is bool) {
+        if (args is PasswordBoxBasicData) {
           return MaterialPageRoute(
-            builder: (_) => EnterPasswordPage(),
+            builder: (_) => EnterPasswordPage(basicData: args),
           );
         }
         return _errorRoute();
