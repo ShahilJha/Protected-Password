@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:protected_password/models/password_box.dart';
 import 'package:protected_password/models/password_box_basic_data.dart';
 import 'package:protected_password/screens/password_box_page/local_widget/add_password_screen.dart';
+import 'package:protected_password/screens/password_box_page/local_widget/update_password_screen.dart';
 import 'package:protected_password/services/firestore_service.dart';
 import 'package:protected_password/services/password_box_provider.dart';
 import 'package:protected_password/utils/utility.dart';
@@ -157,7 +158,15 @@ class BoxWidget extends StatelessWidget {
                                   IconButton(
                                     icon: Icon(Icons.edit),
                                     onPressed: () {
-                                      boxProvider.deletePassword(password);
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) =>
+                                            ChangeNotifierProvider.value(
+                                          value: boxProvider,
+                                          child: UpdatePasswordScreen(
+                                              password: password),
+                                        ),
+                                      );
                                     },
                                   ),
                                   Spacer(),
@@ -263,7 +272,15 @@ class BoxWidget extends StatelessWidget {
                                   IconButton(
                                     icon: Icon(Icons.edit),
                                     onPressed: () {
-                                      boxProvider.deletePassword(password);
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) =>
+                                            ChangeNotifierProvider.value(
+                                          value: boxProvider,
+                                          child: UpdatePasswordScreen(
+                                              password: password),
+                                        ),
+                                      );
                                     },
                                   ),
                                   Spacer(),

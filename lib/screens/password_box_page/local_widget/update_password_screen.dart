@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:protected_password/models/password_box.dart';
 import 'package:protected_password/services/password_box_provider.dart';
 import 'package:protected_password/utils/utility.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AddPasswordScreen extends StatelessWidget {
-  final websiteTextController = TextEditingController();
-  final usernameTextController = TextEditingController();
+class UpdatePasswordScreen extends StatelessWidget {
+  final Password password;
+
+  UpdatePasswordScreen({Key? key, required this.password}) : super(key: key);
+
   final passwordTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    String website = '';
-    String username = '';
-    String password = '';
     final boxProvider = context.watch<PasswordBoxProvider>();
     return Container(
       width: 600.w,
@@ -36,11 +34,12 @@ class AddPasswordScreen extends StatelessWidget {
           Spacer(),
           Container(
             width: 700.w,
-            child: TextField(
+            child: TextFormField(
+              initialValue: password.associatedEntity,
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.done,
               textAlign: TextAlign.center,
-              controller: websiteTextController,
+              // controller: websiteTextController,
               // obscureText: true,
               decoration: InputDecoration(
                 focusColor: Colors.white,
@@ -55,18 +54,19 @@ class AddPasswordScreen extends StatelessWidget {
                 ),
               ),
               onChanged: (value) {
-                website = value;
+                password.associatedEntity = value;
               },
             ),
           ),
           Spacer(),
           Container(
             width: 700.w,
-            child: TextField(
+            child: TextFormField(
+              initialValue: password.userName,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.done,
               textAlign: TextAlign.center,
-              controller: usernameTextController,
+              // controller: usernameTextController,
               // obscureText: true,
               decoration: InputDecoration(
                 focusColor: Colors.white,
@@ -81,14 +81,15 @@ class AddPasswordScreen extends StatelessWidget {
                 ),
               ),
               onChanged: (value) {
-                username = value;
+                password.userName = value;
               },
             ),
           ),
           Spacer(),
           Container(
             width: 700.w,
-            child: TextField(
+            child: TextFormField(
+              // initialValue: password.password,
               controller: passwordTextController,
               textInputAction: TextInputAction.done,
               textAlign: TextAlign.center,
@@ -113,7 +114,7 @@ class AddPasswordScreen extends StatelessWidget {
                 ),
               ),
               onChanged: (value) {
-                password = value;
+                password.password = value;
               },
             ),
           ),
@@ -125,14 +126,8 @@ class AddPasswordScreen extends StatelessWidget {
             icon: Icon(Icons.arrow_forward),
             onPressed: () {
               Navigator.pop(context);
-              boxProvider.addPassword(
-                Password(
-                  id: Uuid().v1(),
-                  associatedEntity: website,
-                  userName: username,
-                  password: password,
-                ),
-              );
+              password.password = passwordTextController.text;
+              boxProvider.editPassword(password);
             },
           ),
           Spacer(),
