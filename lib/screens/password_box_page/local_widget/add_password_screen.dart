@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:protected_password/models/password_box.dart';
 import 'package:protected_password/services/password_box_provider.dart';
+import 'package:protected_password/utils/utility.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -33,73 +34,88 @@ class AddPasswordScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Spacer(),
-          TextField(
-            keyboardType: TextInputType.text,
-            textInputAction: TextInputAction.done,
-            textAlign: TextAlign.center,
-            controller: websiteTextController,
-            // obscureText: true,
-            decoration: InputDecoration(
-              focusColor: Colors.white,
-              hoverColor: Colors.white,
-              labelText: 'Website Name',
-              prefixIcon: Icon(Icons.inbox),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(100.w),
+          Container(
+            width: 700.w,
+            child: TextField(
+              keyboardType: TextInputType.text,
+              textInputAction: TextInputAction.done,
+              textAlign: TextAlign.center,
+              controller: websiteTextController,
+              // obscureText: true,
+              decoration: InputDecoration(
+                focusColor: Colors.white,
+                hoverColor: Colors.white,
+                labelText: 'Website Name',
+                prefixIcon: Icon(Icons.inbox),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100.w),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100.w),
+                ),
               ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(100.w),
-              ),
+              onChanged: (value) {
+                website = value;
+              },
             ),
-            onChanged: (value) {
-              website = value;
-            },
           ),
           Spacer(),
-          TextField(
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.done,
-            textAlign: TextAlign.center,
-            controller: usernameTextController,
-            // obscureText: true,
-            decoration: InputDecoration(
-              focusColor: Colors.white,
-              hoverColor: Colors.white,
-              labelText: 'Username',
-              prefixIcon: Icon(Icons.inbox),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(100.w),
+          Container(
+            width: 700.w,
+            child: TextField(
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.done,
+              textAlign: TextAlign.center,
+              controller: usernameTextController,
+              // obscureText: true,
+              decoration: InputDecoration(
+                focusColor: Colors.white,
+                hoverColor: Colors.white,
+                labelText: 'Username',
+                prefixIcon: Icon(Icons.inbox),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100.w),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100.w),
+                ),
               ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(100.w),
-              ),
+              onChanged: (value) {
+                username = value;
+              },
             ),
-            onChanged: (value) {
-              username = value;
-            },
           ),
           Spacer(),
-          TextField(
-            controller: passwordTextController,
-            textInputAction: TextInputAction.done,
-            textAlign: TextAlign.center,
-            keyboardType: TextInputType.text,
-            // obscureText: true,
-            decoration: InputDecoration(
-              focusColor: Colors.white,
-              hoverColor: Colors.white,
-              labelText: 'Password',
-              prefixIcon: Icon(Icons.inbox),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(100.w),
+          Container(
+            width: 700.w,
+            child: TextField(
+              controller: passwordTextController,
+              textInputAction: TextInputAction.done,
+              textAlign: TextAlign.center,
+              keyboardType: TextInputType.text,
+              // obscureText: true,
+              decoration: InputDecoration(
+                focusColor: Colors.white,
+                hoverColor: Colors.white,
+                labelText: 'Password',
+                prefixIcon: Icon(Icons.inbox),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.gamepad),
+                  onPressed: () {
+                    passwordTextController.text = Utility.generatePassword();
+                  },
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100.w),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100.w),
+                ),
               ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(100.w),
-              ),
+              onChanged: (value) {
+                password = value;
+              },
             ),
-            onChanged: (value) {
-              password = value;
-            },
           ),
           Spacer(),
           IconButton(

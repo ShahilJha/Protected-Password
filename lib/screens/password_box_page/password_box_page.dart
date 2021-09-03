@@ -35,7 +35,6 @@ class BoxWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(Provider.of<PasswordBoxProvider>(context).passwordBox.address);
     final boxProvider = context.watch<PasswordBoxProvider>();
     return Scaffold(
       appBar: AppBar(
