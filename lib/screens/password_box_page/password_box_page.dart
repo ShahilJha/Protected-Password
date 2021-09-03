@@ -49,7 +49,10 @@ class BoxWidget extends StatelessWidget {
             onPressed: () {
               showModalBottomSheet(
                 context: context,
-                builder: (context) => AddPasswordScreen(),
+                builder: (context) => ChangeNotifierProvider.value(
+                  value: boxProvider,
+                  child: AddPasswordScreen(),
+                ),
               );
             },
           ),
@@ -72,51 +75,51 @@ class BoxWidget extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Flexible(
-            child: Container(
-              height: 60.h,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.add_circle_outline),
-                    onPressed: () {
-                      // Provider.of<PasswordBoxProvider>(context).addPassword(
-                      //   Password(
-                      //     id: Uuid().v1(),
-                      //     associatedEntity: 'website',
-                      //     userName: 'username',
-                      //     password: 'password',
-                      //   ),
-                      // );
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (context) => AddPasswordScreen(),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.save),
-                    onPressed: () {
-                      // Provider.of<PasswordBoxProvider>(context, listen: false)
-                      //     .saveBox();
-                      boxProvider.saveBox();
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: () {
-                      // Provider.of<PasswordBoxProvider>(context, listen: false)
-                      //     .deleteBox();
-                      boxProvider.deleteBox();
-                      Navigator.pop(context);
-                      Navigator.of(context).pushNamed('/');
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // Flexible(
+          //   child: Container(
+          //     height: 60.h,
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.end,
+          //       children: [
+          //         IconButton(
+          //           icon: Icon(Icons.add_circle_outline),
+          //           onPressed: () {
+          //             // Provider.of<PasswordBoxProvider>(context).addPassword(
+          //             //   Password(
+          //             //     id: Uuid().v1(),
+          //             //     associatedEntity: 'website',
+          //             //     userName: 'username',
+          //             //     password: 'password',
+          //             //   ),
+          //             // );
+          //             showModalBottomSheet(
+          //               context: context,
+          //               builder: (context) => AddPasswordScreen(),
+          //             );
+          //           },
+          //         ),
+          //         IconButton(
+          //           icon: Icon(Icons.save),
+          //           onPressed: () {
+          //             // Provider.of<PasswordBoxProvider>(context, listen: false)
+          //             //     .saveBox();
+          //             boxProvider.saveBox();
+          //           },
+          //         ),
+          //         IconButton(
+          //           icon: Icon(Icons.close),
+          //           onPressed: () {
+          //             // Provider.of<PasswordBoxProvider>(context, listen: false)
+          //             //     .deleteBox();
+          //             boxProvider.deleteBox();
+          //             Navigator.pop(context);
+          //             Navigator.of(context).pushNamed('/');
+          //           },
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           Flexible(
             child: Container(
               width: double.maxFinite,
