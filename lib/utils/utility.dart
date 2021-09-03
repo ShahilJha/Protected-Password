@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'package:flutter/services.dart';
 
 import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
@@ -144,5 +145,11 @@ class Utility {
       final indexRandom = Random.secure().nextInt(chars.length);
       return chars[indexRandom];
     }).join('');
+  }
+
+  static void copyToClipboard(BuildContext context, String text) {
+    Clipboard.setData(ClipboardData(text: text));
+    ScaffoldMessenger.of(context)
+        .showSnackBar((SnackBar(content: Text("Copied to clipboard"))));
   }
 }
