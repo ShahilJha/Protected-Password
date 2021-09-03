@@ -56,12 +56,14 @@ class _AddressSearchPageState extends State<AddressSearchPage> {
                               await DatabaseService.instance
                                   .checkAddress(address);
                           //redirect to password page
+                          Navigator.pop(context);
                           Navigator.of(context).pushNamed(
                             '/enter_password_page',
                             arguments: passwordBoxBasicData,
                           );
                         } else {
                           //goto box creation page
+                          Navigator.pop(context);
                           Navigator.of(context).pushNamed(
                             '/box_create_page',
                             arguments: address,

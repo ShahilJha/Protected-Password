@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:protected_password/models/password_box.dart';
 import 'package:protected_password/models/password_box_basic_data.dart';
+import 'package:protected_password/models/temp_box.dart';
 import 'package:protected_password/services/box_key.dart';
 import 'package:protected_password/services/firestore_service.dart';
 import 'package:protected_password/services/password_box_provider.dart';
@@ -126,12 +127,20 @@ class _BoxCreatePageState extends State<BoxCreatePage> {
                   icon: Icon(Icons.arrow_forward),
                   onPressed: () async {
                     if (createdKey == recreatedKey) {
-                      //create passwordbox
-                      await DatabaseService.instance.createPasswordBox(
-                          address: widget.address, boxKey: createdKey);
-
                       BoxKey.key = createdKey;
 
+                      TempBox.instance.id = createdKey;
+                      TempBox.instance.address = widget.address;
+                      TempBox.instance.hash =
+                          Utility.getKeyDigestString(createdKey);
+
+                      //create passwordbox
+                      await DatabaseService.instance.createPasswordBox(
+                        address: widget.address,
+                        boxKey: createdKey,
+                      );
+
+                      Navigator.pop(context);
                       Navigator.of(context).pushNamed(
                         '/password_box_page',
                         arguments: PasswordBoxBasicData(

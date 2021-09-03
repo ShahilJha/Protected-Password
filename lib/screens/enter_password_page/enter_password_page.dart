@@ -68,6 +68,7 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                           TempBox.instance.hash = widget.basicData.hash;
 
                           //redirect to password box page
+                          Navigator.pop(context);
                           Navigator.of(context).pushNamed(
                             '/password_box_page',
                             arguments: widget.basicData,
