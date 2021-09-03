@@ -53,6 +53,7 @@ class DatabaseService {
   }
 
   Future<PasswordBox> getPasswordBox(PasswordBoxBasicData data) async {
+    print('start of getPasswordBox');
     try {
       var documentQuery = await _firestore
           .collection('PasswordBox')

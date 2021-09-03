@@ -60,9 +60,11 @@ class _EnterPasswordPageState extends State<EnterPasswordPage> {
                       onPressed: () {
                         if (Utility.getKeyDigestString(password) ==
                             widget.basicData.hash) {
+                          BoxKey.key = password;
+
                           //redirect to password box page
                           Navigator.of(context).pushNamed(
-                            '/enter_password_page',
+                            '/password_box_page',
                             arguments: widget.basicData,
                           );
                         } else {

@@ -88,7 +88,14 @@ class _AddressSearchPageState extends State<AddressSearchPage> {
                 //   color: Theme.of(context).primaryColor,
                 //   hoverColor: Theme.of(context).primaryColor,
                 //   icon: Icon(Icons.arrow_forward),
-                //   onPressed: () {},
+                //   onPressed: () {
+                //     String id = 'this is a test';
+                //     print("ID: " + id);
+                //     String en = Utility.encryptString(id, 'shahil');
+                //     print('ENCRYPTED: ' + en);
+                //     String de = Utility.decryptString(en, 'shahil');
+                //     print('DECRYPTED: ' + de);
+                //   },
                 // ),
                 // Spacer(),
               ],

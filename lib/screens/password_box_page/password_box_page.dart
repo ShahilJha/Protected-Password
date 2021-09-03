@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:protected_password/models/password_box.dart';
 import 'package:protected_password/models/password_box_basic_data.dart';
+import 'package:protected_password/services/box_key.dart';
 import 'package:protected_password/services/firestore_service.dart';
 import 'package:protected_password/services/password_box_provider.dart';
+import 'package:protected_password/utils/utility.dart';
 import 'package:provider/provider.dart';
 
 class PasswordBoxPage extends StatefulWidget {
@@ -14,29 +16,28 @@ class PasswordBoxPage extends StatefulWidget {
 }
 
 class _PasswordBoxPageState extends State<PasswordBoxPage> {
-  late PasswordBox box;
+  PasswordBox box = PasswordBox(id: "", address: "", passwords: []);
 
-  @override
-  void didChangeDependencies() async {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
+  Future<PasswordBox> getBox() async {
+    print('EXPECTED ENCRYPTED ID: ' +
+        Utility.encryptString(widget.basicData.id, BoxKey.key));
     box = await DatabaseService.instance.getPasswordBox(widget.basicData);
+    return box;
   }
+
+  // _PasswordBoxPageState() {
+  //   getBox().then((value) => setState(() {
+  //         box = value;
+  //       }));
+  // }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<PasswordBoxProvider>(
       create: (context) => PasswordBoxProvider(box),
-      child: PasswordBoxWidget(),
+      child: Container(
+        color: Colors.red,
+      ),
     );
-  }
-}
-
-class PasswordBoxWidget extends StatelessWidget {
-  const PasswordBoxWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
