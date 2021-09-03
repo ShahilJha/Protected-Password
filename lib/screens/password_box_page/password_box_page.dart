@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:protected_password/models/password_box.dart';
 import 'package:protected_password/models/password_box_basic_data.dart';
+import 'package:protected_password/models/temp_box.dart';
 import 'package:protected_password/services/box_key.dart';
 import 'package:protected_password/services/firestore_service.dart';
 import 'package:protected_password/services/password_box_provider.dart';
@@ -17,15 +18,7 @@ class PasswordBoxPage extends StatefulWidget {
 }
 
 class _PasswordBoxPageState extends State<PasswordBoxPage> {
-  PasswordBox box = PasswordBox(id: "", address: "", passwords: []);
-
-  Future<PasswordBox> getBox() async {
-    print('EXPECTED ENCRYPTED ID: ' +
-        Utility.encryptString(widget.basicData.id, BoxKey.key));
-
-    box = await DatabaseService.instance.getPasswordBox(widget.basicData);
-    return box;
-  }
+  // PasswordBox box = PasswordBox(id: "", address: "", passwords: []);
 
   // _PasswordBoxPageState() {
   //   getBox().then((value) => setState(() {
@@ -38,7 +31,11 @@ class _PasswordBoxPageState extends State<PasswordBoxPage> {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       // print('BEFORE : ' + box.id + ' ' + box.address);
-      box = await DatabaseService.instance.getPasswordBox(widget.basicData);
+      PasswordBox box =
+          await DatabaseService.instance.getPasswordBox(widget.basicData);
+      TempBox.instance.id = box.id;
+      TempBox.instance.address = box.address;
+      TempBox.instance.passwords = box.passwords;
       // print('AFTER : ' +
       //     box.id +
       //     ' ' +
@@ -51,7 +48,7 @@ class _PasswordBoxPageState extends State<PasswordBoxPage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<PasswordBoxProvider>(
-      create: (context) => PasswordBoxProvider(box),
+      create: (context) => PasswordBoxProvider(),
       child: BoxWidget(),
     );
   }
