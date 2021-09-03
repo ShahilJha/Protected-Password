@@ -152,4 +152,33 @@ class Utility {
     ScaffoldMessenger.of(context)
         .showSnackBar((SnackBar(content: Text("Copied to clipboard"))));
   }
+
+  ///s => 640
+  ///m => 720
+  ///l => 900
+  ///xl => 1080
+  ///xxl=> 1080 and more
+  static double getResponsiveSize(
+    BuildContext context, {
+    required double s,
+    required double m,
+    required double l,
+    required double xl,
+    required double xxl,
+  }) {
+    double size = 0.0;
+    double currentSize = MediaQuery.of(context).size.width;
+    if (currentSize < 640) {
+      size = s;
+    } else if (currentSize < 720) {
+      size = m;
+    } else if (currentSize < 900) {
+      size = l;
+    } else if (currentSize < 1080) {
+      size = xl;
+    } else {
+      size = xxl;
+    }
+    return size;
+  }
 }

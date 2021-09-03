@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:protected_password/screens/address_search_page/address_search_page.dart';
+import 'package:protected_password/screens/box_create_page/box_create_page.dart';
 import 'package:protected_password/screens/enter_password_page/enter_password_page.dart';
 import 'package:protected_password/screens/password_box_page/password_box_page.dart';
 
@@ -33,6 +34,14 @@ class RouteGenerator {
         if (args is bool) {
           return MaterialPageRoute(
             builder: (_) => EnterPasswordPage(),
+          );
+        }
+        return _errorRoute();
+
+      case '/box_create_page':
+        if (args is String) {
+          return MaterialPageRoute(
+            builder: (_) => BoxCreatePage(address: args),
           );
         }
         return _errorRoute();

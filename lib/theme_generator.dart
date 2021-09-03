@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ThemeGenerator {
-  static const kPrimaryColor = Colors.blue;
+  static const kPrimaryColor = Colors.black45;
   static ThemeData generateThemeData() {
     return ThemeData(
-      primaryColor: kPrimaryColor,
-      accentColor: Colors.blueGrey,
-      scaffoldBackgroundColor: Color(0xFFF3F3F3),
+      primaryColor: Color(0xFF000000),
+      accentColor: Color(0xFF3b3b3b),
+      scaffoldBackgroundColor: Color(0xFFa5a5a5),
       visualDensity: VisualDensity.adaptivePlatformDensity,
       buttonTheme: _getButtonThemeData(),
       dividerTheme: _getDividerThemeData(),

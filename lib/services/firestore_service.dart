@@ -12,19 +12,43 @@ class DatabaseService {
   static final _firestore = FirebaseFirestore.instance;
   FirebaseFirestore get firestore => _firestore;
 
+  ///exists => true
+  ///doesn't exit => false
+  Future<bool> doesAddressExit(String address) async {
+    try {
+      var documentQuery = await _firestore
+          .collection('BasicData')
+          .where('address', isEqualTo: address)
+          .get();
+
+      return documentQuery.size == 0 ? false : true;
+    } catch (e) {
+      print('EXCEPTION: -checkAddress--> $e');
+    }
+    return false;
+  }
+
   Future<PasswordBoxBasicData> checkAddress(String address) async {
     try {
       var documentQuery = await _firestore
           .collection('BasicData')
           .where('address', isEqualTo: address)
           .get();
+
+      //if the address has not been occupied
+      if (documentQuery.size == 0) {
+        return passwordBoxBasicDataFromMap(
+          {"id": "", "address": "", "hash": ""},
+        );
+      }
+
       var document = documentQuery.docs.first.data();
       return passwordBoxBasicDataFromMap(document);
     } catch (e) {
       print('EXCEPTION: -checkAddress--> $e');
     }
     return passwordBoxBasicDataFromMap(
-      {"id": "null", "address": "Error", "hash": "Error"},
+      {"id": "", "address": "", "hash": ""},
     );
   }
 
@@ -55,28 +79,43 @@ class DatabaseService {
     );
   }
 
-  Future<void> createPasswordBox(PasswordBox box) async {
+  Future<void> createPasswordBox(
+      {required String address, required String boxKey}) async {
     try {
+      late PasswordBox box;
+      BoxKey.key = boxKey;
       DocumentReference reference = _firestore.collection('BasicData').doc();
       reference.set(
         passwordBoxBasicDataToMap(
           PasswordBoxBasicData(
             id: reference.id,
-            address: box.address,
+            address: address,
             hash: BoxKey.hash,
           ),
         ),
       );
 
-      box.id = reference.id;
-      box.passwords.add(
-        Password(
-          id: Uuid().v1(),
-          associatedEntity: "Website",
-          userName: "User Name",
-          password: "password",
-        ),
+      box = PasswordBox(
+        id: reference.id,
+        address: address,
+        passwords: [
+          Password(
+            id: Uuid().v1(),
+            associatedEntity: "Website",
+            userName: "User Name",
+            password: "password",
+          ),
+        ],
       );
+      // box.id = reference.id;
+      // box.passwords.add(
+      //   Password(
+      //     id: Uuid().v1(),
+      //     associatedEntity: "Website",
+      //     userName: "User Name",
+      //     password: "password",
+      //   ),
+      // );
       _firestore.collection('PasswordBox').add(
             passwordBoxToMap(box),
           );
@@ -128,7 +167,7 @@ class DatabaseService {
 
   Future<void> changePassword(PasswordBox box, String newKey) async {
     try {
-      //todo:change hash value in basicData
+      //change hash value in basicData
       _firestore
           .collection('BasicData')
           .where('id', isEqualTo: box.id)
