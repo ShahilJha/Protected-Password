@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:protected_password/ui/sizing_information.dart';
-import 'package:protected_password/utils/ui_utils.dart';
+import 'package:protected_password/ui/ui_utils.dart';
 
 class ResponsiveBuilder extends StatelessWidget {
   final Widget Function(
@@ -10,6 +10,7 @@ class ResponsiveBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQuery = MediaQuery.of(context);
+
     return LayoutBuilder(builder: (context, boxConstraints) {
       SizingInformation sizingInformation = SizingInformation(
         deviceScreenType: getDeviceType(mediaQuery),
@@ -17,6 +18,7 @@ class ResponsiveBuilder extends StatelessWidget {
         localWidgetSize:
             Size(boxConstraints.maxWidth, boxConstraints.maxHeight),
       );
+
       return builder(context, sizingInformation);
     });
   }
