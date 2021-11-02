@@ -5,7 +5,7 @@ class ThemeGenerator {
   static const kPrimaryColor = Colors.black45;
   static ThemeData generateThemeData() {
     return ThemeData(
-      primaryColor: Color(0xFF000000),
+      primaryColor: Color(0xFF333333),
       accentColor: Color(0xFF3b3b3b),
       scaffoldBackgroundColor: Color(0xFFa5a5a5),
       visualDensity: VisualDensity.adaptivePlatformDensity,
